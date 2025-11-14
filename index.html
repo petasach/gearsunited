@@ -1,0 +1,1618 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gears United</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-red: #c4141e;
+            --primary-red-dark: #c4141e;
+            --primary-red-light: #c4141e;
+            --dark-blue: #002f49;
+            --dark-blue-light: #002f49;
+            --dark-blue-dark: #204b9b;
+            --cream: #fef7ed;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #002f49;
+            --gray-700: #002f49;
+            --gray-900: #002f49;
+            --font-heading: 'Roboto', system-ui, sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --section-padding: 5rem 0;
+            --container-padding: 0 2rem;
+            --border-radius: 12px;
+            --border-radius-large: 24px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --transition-fast: 0.15s ease;
+            --transition: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--dark-blue-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+        
+        .section {
+            padding: var(--section-padding);
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #fef7ed;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+        
+        .header.scrolled {
+            background: #fef7ed;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+            position: relative;
+        }
+        
+        .nav-left {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            position: absolute;
+            left: 0;
+        }
+        
+        .nav-right {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            position: absolute;
+            right: 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            z-index: 2;
+        }
+        .logo-image {
+            width: 250px;
+            height: 100px;
+            object-fit: contain;
+            transition: var(--transition);  
+        }
+        
+        .nav-link {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-red);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            position: absolute;
+            right: 0;
+            z-index: 3;
+        }
+        
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #002f49;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        
+        .hero {
+            background-image: url('porche.jpg');
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 47, 73, 0.7);
+        }
+        
+        @keyframes heroBackground {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: heroFadeIn 1s ease-out;
+        }
+        
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: var(--white);
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-large);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--primary-red-light), var(--primary-red));
+        }
+        
+        .about {
+            background: var(--cream);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .about-text p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--dark-blue-dark);
+            margin-bottom: 2rem;
+        }
+        
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .read-more-btn:hover {
+            gap: 1rem;
+            color: var(--primary-red-dark);
+        }
+        
+        .about-visual {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
+            border-radius: var(--border-radius-large);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        }
+        
+        .hidden-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            position: relative;
+        }
+        
+        .hidden-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-red);
+            border-radius: 1px;
+        }
+        
+        .events {
+            background: var(--cream);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--dark-blue-dark);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .event-card {
+            background: var(--white);
+            border-radius: var(--border-radius-large);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-red-light));
+        }
+        
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .event-date {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--dark-blue), var(--dark-blue-light));
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .event-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .event-description {
+            color: var(--dark-blue-dark);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .event-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: 2px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .event-btn:hover {
+            background: var(--primary-red);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        .event-details {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .event-details h4 {
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .event-details ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .event-details li {
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue-dark);
+        }
+        
+        .event-details p {
+            color: var(--dark-blue-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-details strong {
+            color: var(--dark-blue);
+        }
+        
+        .event-schedule {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .event-schedule th,
+        .event-schedule td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .event-schedule th {
+            background: var(--white);
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+        
+        .event-schedule td {
+            color: var(--dark-blue-dark);
+        }
+        
+        .gallery {
+            background: var(--white);
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .gallery .section-header {
+            padding: 5rem 2rem 3rem;
+            margin-bottom: 0;
+        }
+        
+        .gallery-carousel {
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+        
+        .gallery-track {
+            display: flex;
+            gap: 0;
+        }
+        
+        .gallery-track.left {
+            animation: galleryScrollLeft 25s linear infinite;
+        }
+        
+        .gallery-track.right {
+            animation: galleryScrollRight 25s linear infinite;
+        }
+        
+        @keyframes galleryScrollLeft {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        
+        @keyframes galleryScrollRight {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .gallery-item {
+            flex-shrink: 0;
+            position: relative;
+            width: 100vw;
+            height: 70vh;
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(45deg, var(--gray-200), var(--gray-100));
+        }
+        
+        .gallery-carousel:hover .gallery-track {
+            animation-play-state: paused;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            color: var(--white);
+            font-weight: 600;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .gallery-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .gallery-modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+        }
+        
+        .sponsors {
+            background: var(--cream);
+            overflow: hidden;
+        }
+        
+        .sponsors-marquee {
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .sponsors-track {
+            display: inline-flex;
+            gap: 3rem;
+            animation: marqueeScroll 30s linear infinite;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .sponsors-track {
+                animation: none;
+            }
+        }
+        
+        .sponsors-marquee:hover .sponsors-track,
+        .sponsors-marquee:focus-within .sponsors-track {
+            animation-play-state: paused;
+        }
+        
+        .sponsor-item {
+            flex-shrink: 0;
+            width: 200px;
+            height: 100px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-blue-dark);
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sponsor-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        @keyframes marqueeScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        
+        .aktualne {
+            background: var(--white);
+        }
+        
+        .aktualne-container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .instagram-feed {
+            width: 100%;
+            min-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .rezervace {
+            background: var(--cream);
+        }
+        
+        .rezervace-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+        
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+            color: var(--dark-blue-dark);
+            background: var(--white);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(196, 20, 30, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .form-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .form-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .form-status.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .form-status.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .footer {
+            background: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p,
+        .footer-section li {
+            color: var(--gray-300);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary-red);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-300);
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 3rem 0;
+                --container-padding: 0 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-left,
+            .nav-right {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(254, 247, 237, 0.98);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0;
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .nav-left.active,
+            .nav-right.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                padding: 1rem 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(0, 47, 73, 0.1);
+            }
+            
+            .logo-image {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 50vh;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <ul class="nav-left" id="navLeft">
+                    <li><a href="#home" class="nav-link active">Úvod</a></li>
+                    <li><a href="#about" class="nav-link">O nás</a></li>
+                    <li><a href="#events" class="nav-link">Akce</a></li>
+                    <li><a href="#gallery" class="nav-link">Galerie</a></li>
+                </ul>
+                
+                <a href="#home" class="logo">
+                    <img src="GU_napis_modro-cervena.png" alt="Gears United logo" class="logo-image">
+                </a>
+                
+                <ul class="nav-right" id="navRight">
+                    <li><a href="#sponsors" class="nav-link">Partneři</a></li>
+                    <li><a href="#aktualne" class="nav-link">Aktuálně</a></li>
+                    <li><a href="#rezervace" class="nav-link">Rezervace</a></li>
+                    <li><a href="#contact" class="nav-link">Kontakt</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero section" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Zažij Závodní Dokonalost</h1>
+                    <p class="hero-subtitle">
+                        Prémiové půjčování závodních vozů a nezapomenutelné zážitky na trati. 
+                        Pociť adrenalin profesionálního motorsportu.
+                    </p>
+                    <a href="#about" class="hero-cta btn-ripple">
+                        <span>Zjistit více</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text fade-in">
+                        <h2>O NÁS</h2>
+                        <p>
+                            Jsme tým nadšenců motorsportu, který se specializuje na poskytování jedinečných závodních zážitků. 
+                            Naše společnost nabízí půjčování prémiových závodních vozů a organizaci profesionálních závodních akcí 
+                            pro všechny, kdo chtějí prožít skutečný adrenalin na závodních okruzích.
+                        </p>
+                        <p id="moreContent" class="hidden-content">
+                            S více než 10letými zkušenostmi v oboru motorsportu poskytujeme bezpečné a vzrušující zážitky 
+                            na nejlepších českých okruzích. Naši certifikovaní instruktoři vás provedou základy závodní jízdy 
+                            a pomohou vám dosáhnout maximálního potenciálu. Disponujeme flotilou nejmodernějších závodních vozů 
+                            včetně GT3, Formula a rally speciálů.
+                        </p>
+                        <a href="#" class="read-more-btn" id="readMoreBtn">
+                            <span>Číst více</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="about-visual fade-in">
+                        <img src="spol.jpg" alt="Gears United about" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1;" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="events section" id="events">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2 class="section-title">NADCHÁZEJÍCÍ AKCE</h2>
+                    <p class="section-subtitle">
+                        Připoj se k našim exkluzivním závodním akcím a prožij nezapomenutelné chvíle za volantem.
+                    </p>
+                </div>
+                
+                <div class="events-grid">
+                    <article class="event-card fade-in">
+                        <div class="event-date">26. září 2025</div>
+                        <h3 class="event-title">Gears United / Corners Trackday + Víkendovky Meet</h3>
+                        <p class="event-description">
+                            Připraveno je několik variant účasti na Autodromu Sosnová, takže si každý najde to své. 
+                            Součástí dne bude také podcast Domo's Car Talk se zajímavými hosty.
+                        </p>
+                        <button class="event-btn" onclick="toggleDetails('event1')">
+                            <span>Více informací</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="event-details" id="event1">
+                            <h4>Varianty účasti:</h4>
+                            <ul>
+                                <li><strong>Varianta 1 – Výstava + Spanilá jízda:</strong> Statická výstava aut v paddocku, spanilá jízda všech vystavovatelů po okruhu</li>
+                                <li><strong>Varianta 2 – Výstava + Spanilka + Taxi jízdy:</strong> Výstava a spanilá jízda, možnost zážitkových taxi jízd v našich tracktoolech: BMW F80 „Čuník" a BMW M2 Trackday EVO</li>
+                                <li><strong>Varianta 3 – Full Trackday / Half Trackday:</strong> Klasický celodenní / případně dopolední nebo odpolední okruhový den — volné ježdění na trati</li>
+                                <li><strong>Varianta 4 – Taxi jízdy:</strong> Nemáš co vystavit nebo čím jezdit, můžeš se svézt formou taxi jízdy v Čuníkovi a M2 Trackday EVO</li>
+                            </ul>
+                            
+                            <h4>Harmonogram dne – Sosnová, 26. 9. 2025:</h4>
+                            <table class="event-schedule">
+                                <tr>
+                                    <th>Čas</th>
+                                    <th>Program</th>
+                                </tr>
+                                <tr>
+                                    <td>08:00 – 08:45</td>
+                                    <td>Registrace účastníků</td>
+                                </tr>
+                                <tr>
+                                    <td>08:45 – 09:00</td>
+                                    <td>Úvodní briefing (bezpečnost, zásady pohybu na trati, představení instruktorů)</td>
+                                </tr>
+                                <tr>
+                                    <td>09:00 – 13:00</td>
+                                    <td>Dopolední jízdy</td>
+                                </tr>
+                                <tr>
+                                    <td>10:30 – 11:00</td>
+                                    <td>Podcast s prvním hostem</td>
+                                </tr>
+                                <tr>
+                                    <td>12:00 – 12:30</td>
+                                    <td>Podcast s druhým hostem</td>
+                                </tr>
+                                <tr>
+                                    <td>12:45 – 13:00</td>
+                                    <td>Spanilá jízda (cca 3 kola v lehčím tempu)</td>
+                                </tr>
+                                <tr>
+                                    <td>13:00 – 13:10</td>
+                                    <td>Briefing (krátké zopakování pravidel)</td>
+                                </tr>
+                                <tr>
+                                    <td>13:00 – 17:00</td>
+                                    <td>Odpolední jízdy</td>
+                                </tr>
+                                <tr>
+                                    <td>13:30 – 14:00</td>
+                                    <td>Podcast s třetím hostem</td>
+                                </tr>
+                                <tr>
+                                    <td>14:30 – 15:00</td>
+                                    <td>Podcast se čtvrtým hostem</td>
+                                </tr>
+                                <tr>
+                                    <td>17:00</td>
+                                    <td>Zakončení akce</td>
+                                </tr>
+                            </table>
+                            
+                            <p><strong>Místo:</strong> Autodrom Sosnová</p>
+                            <p><strong>Zajištění:</strong> Lehké občerstvení a nápoje pro účastníky ježdění</p>
+                        </div>
+                    </article>
+                    
+                    <article class="event-card fade-in">
+                        <div class="event-date">27. října 2025</div>
+                        <h3 class="event-title">Gears United / Corners Trackday + JDM Meet</h3>
+                        <p class="event-description">
+                            Pátý ročník Toyota GR Meet & JDM Meet se uskuteční během prodlouženého říjnového víkendu. 
+                            Setkání japonských sportovních aut s Corners a Gears United – hlavně o jízdy na závodním okruhu!
+                        </p>
+                        <button class="event-btn" onclick="toggleDetails('event2')">
+                            <span>Více informací</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="event-details" id="event2">
+                            <h4>O akci:</h4>
+                            <p>
+                                Setkání japonských sportovních aut s Corners a Gears United. Pátý ročník Toyota GR Meet & JDM Meet 
+                                se uskuteční během prodlouženého říjnového víkendu. Nenech se ale zmást pojmenováním akce jako setkání 
+                                nebo sraz – stejně jako vždy půjde hlavně o jízdy na závodním okruhu. Jde nám hlavně o co nejlepší 
+                                svezení a atmosféru.
+                            </p>
+                            
+                            <h4>JDM Meet:</h4>
+                            <p>
+                                Hlavní programem bude JDM Meet – setkání všech fanoušků a majitelů japonských aut bez ohledu na značku 
+                                či model. Pokud se chceš přijet jen podívat nebo vystavit svůj vůz, nemusíš se registrovat ani platit 
+                                žádný poplatek. Vítáme každé zajímavé japonské auto z minulosti i současnosti, a pokud máš opravdu 
+                                unikátní kousek, stačí se nám ozvat na email info@gearsunited.cz
+                            </p>
+                            
+                            <h4>Na co se můžeš těšit:</h4>
+                            <ul>
+                                <li>Samotné ježdění na mosteckém závodním okruhu</li>
+                                <li>Prezentace novinek Toyota a Lexus</li>
+                                <li>Výstava renomovaných výrobců sportovního a závodního příslušenství</li>
+                                <li>Oficiální stánek Toyota s merchem GAZOO Racing</li>
+                                <li>Bohatý doprovodný program, soutěže a další překvapení, která budeme postupně odhalovat na našich sociálních sítích</li>
+                            </ul>
+                            
+                            <p><strong>Místo:</strong> Autodrom Most</p>
+                            <p><strong>Vstup pro vystavovatele:</strong> Zdarma</p>
+                        </div>
+                    </article>
+                    
+                    <article class="event-card fade-in">
+                        <div class="event-date">Již brzy</div>
+                        <h3 class="event-title">Další akce</h3>
+                        <p class="event-description">
+                            Připravujeme pro vás další vzrušující závodní akce a trackdaye. 
+                            Sledujte naše sociální sítě pro aktuální informace o nadcházejících událostech.
+                        </p>
+                        <button class="event-btn" onclick="window.location.href='https://www.instagram.com/gearsunited/'">
+                            <span>Sledovat Instagram</span>
+                            <i class="fab fa-instagram"></i>
+                        </button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery section" id="gallery">
+            <div class="section-header fade-in">
+                <h2 class="section-title">GALERIE</h2>
+                <p class="section-subtitle">
+                    Podívejte se na fotografie z našich akcí a závodních vozů, které máme k dispozici.
+                </p>
+            </div>
+            
+            <div class="gallery-carousel">
+                <div class="gallery-track left">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="bmw.jpg" alt="GT3 na okruhu Brno" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>GT3 na okruhu Brno</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="2lid.jpg" alt="Formula na trati Most" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Formula na trati Most</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="porche.jpg" alt="Rally speciál v akci" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Rally speciál v akci</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="bmw.jpg" alt="GT3 na okruhu Brno" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>GT3 na okruhu Brno</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="2lid.jpg" alt="Formula na trati Most" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Formula na trati Most</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="porche.jpg" alt="Rally speciál v akci" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Rally speciál v akci</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-carousel">
+                <div class="gallery-track right">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="3lid.jpg" alt="Cílová rovinka" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Cílová rovinka</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="cerbmw.jpg" alt="Bezpečnostní vybavení" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Bezpečnostní vybavení</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="mulaut.jpg" alt="Vyhlášení vítězů" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Vyhlášení vítězů</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="3lid.jpg" alt="Cílová rovinka" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Cílová rovinka</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="cerbmw.jpg" alt="Bezpečnostní vybavení" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Bezpečnostní vybavení</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="mulaut.jpg" alt="Vyhlášení vítězů" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Vyhlášení vítězů</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sponsors section" id="sponsors">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2 class="section-title">NAŠI PARTNEŘI</h2>
+                    <p class="section-subtitle">
+                        Spolupracujeme s předními značkami v oblasti motorsportu a automobilového průmyslu.
+                    </p>
+                </div>
+                
+                <div class="sponsors-marquee">
+                    <div class="sponsors-track">
+                        <div class="sponsor-item">Logo 1</div>
+                        <div class="sponsor-item">Logo 2</div>
+                        <div class="sponsor-item">Logo 3</div>
+                        <div class="sponsor-item">Logo 4</div>
+                        <div class="sponsor-item">Logo 5</div>
+                        <div class="sponsor-item">Logo 6</div>
+                        <div class="sponsor-item">Logo 1</div>
+                        <div class="sponsor-item">Logo 2</div>
+                        <div class="sponsor-item">Logo 3</div>
+                        <div class="sponsor-item">Logo 4</div>
+                        <div class="sponsor-item">Logo 5</div>
+                        <div class="sponsor-item">Logo 6</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="aktualne section" id="aktualne">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2 class="section-title">AKTUÁLNĚ</h2>
+                    <p class="section-subtitle">
+                        Sledujte naše nejnovější akce a zákulisí závodního světa na Instagramu.
+                    </p>
+                </div>
+                
+                <div class="aktualne-container fade-in">
+                    <div class="instagram-feed">
+                        <div style="max-width: 800px; margin: 2rem auto; text-align: center;">
+                            <div style="background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); padding: 3rem 2rem; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                                <i class="fab fa-instagram" style="font-size: 4rem; color: white; margin-bottom: 1.5rem; display: block;"></i>
+                                <h3 style="color: white; font-size: 2rem; margin-bottom: 1rem; font-family: var(--font-heading);">@gearsunited</h3>
+                                <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.1rem;">Sledujte naše nejnovější akce, zákulisí a závodní momenty</p>
+                                <a href="https://www.instagram.com/gearsunited/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.75rem; background: white; color: #dc2743; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)';">
+                                    <i class="fab fa-instagram" style="font-size: 1.5rem;"></i>
+                                    <span>Sledovat na Instagramu</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="rezervace section" id="rezervace">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2 class="section-title">REZERVACE</h2>
+                    <p class="section-subtitle">
+                        Zarezervujte si své místo na některé z našich akcí nebo se nás na cokoliv zeptejte.
+                    </p>
+                </div>
+                
+                <form class="rezervace-form fade-in" id="rezervaceForm" action="https://formsubmit.co/hasek.net@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="#rezervace">
+                    <input type="hidden" name="_subject" value="Nová rezervace z Gears United">
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Jméno / Name *</label>
+                        <input type="text" id="name" name="name" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">E-mail *</label>
+                        <input type="email" id="email" name="email" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event" class="form-label">Výběr akce / Event</label>
+                        <select id="event" name="event" class="form-select">
+                            <option value="">-- Vyberte akci --</option>
+                            <option value="26.9. Gears United / Corners Trackday + Víkendovky Meet">26.9. Gears United / Corners Trackday + Víkendovky Meet</option>
+                            <option value="27.10. Gears United / Corners Trackday + JDM Meet">27.10. Gears United / Corners Trackday + JDM Meet</option>
+                            <option value="Jiná">Jiná / Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Zpráva / Message</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="Napište nám o jakou akci máte zájem nebo položte dotaz..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Odeslat rezervaci</button>
+                    
+                    <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section fade-in">
+                    <h3>Gears United</h3>
+                    <p>
+                        Váš partner pro nezapomenutelné závodní zážitky. 
+                        Poskytujeme profesionální služby v oblasti motorsportu již více než 10 let.
+                    </p>
+                </div>
+                
+                <div class="footer-section fade-in">
+                    <h3>KONTAKT</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +420 777 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@gearsunited.cz</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Praha, Česká republika</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section fade-in">
+                    <h3>SLUŽBY</h3>
+                    <ul>
+                        <li><a href="#">Půjčování závodních vozů</a></li>
+                        <li><a href="#">Instruktáže jízdy</a></li>
+                        <li><a href="#">Firemní akce</a></li>
+                        <li><a href="#">Závodní kurzy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section fade-in">
+                    <h3>Sledujte nás</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="https://instagram.com/gearsunited" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 GEARS UNITED by Creator's Lab</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="gallery-modal" id="galleryModal" onclick="closeModal()">
+        <img id="modalImage" src="" alt="">
+    </div>
+
+    <script>
+        const header = document.getElementById('header');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLeft = document.getElementById('navLeft');
+        const navRight = document.getElementById('navRight');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLeft.classList.toggle('active');
+            navRight.classList.toggle('active');
+            
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLeft.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+        
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const moreContent = document.getElementById('moreContent');
+        
+        readMoreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (moreContent.style.display === 'none' || !moreContent.style.display) {
+                moreContent.style.display = 'block';
+                readMoreBtn.querySelector('span').textContent = 'Číst méně';
+                readMoreBtn.querySelector('i').className = 'fas fa-arrow-up';
+            } else {
+                moreContent.style.display = 'none';
+                readMoreBtn.querySelector('span').textContent = 'Číst více';
+                readMoreBtn.querySelector('i').className = 'fas fa-arrow-down';
+            }
+        });
+        
+        function toggleDetails(eventId) {
+            const details = document.getElementById(eventId);
+            const button = details.previousElementSibling;
+            
+            if (details.style.display === 'none' || !details.style.display) {
+                details.style.display = 'block';
+                button.querySelector('span').textContent = 'Skrýt detaily';
+                button.querySelector('i').style.transform = 'rotate(270deg)';
+            } else {
+                details.style.display = 'none';
+                button.querySelector('span').textContent = 'Více informací';
+                button.querySelector('i').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        function openModal(item) {
+            const modal = document.getElementById('galleryModal');
+            const modalImg = document.getElementById('modalImage');
+            const img = item.querySelector('img');
+            
+            if (img) {
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+            }
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.querySelectorAll('.btn-ripple').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                navLeft.classList.remove('active');
+                navRight.classList.remove('active');
+                mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+        
+        const rezervaceForm = document.getElementById('rezervaceForm');
+        const formStatus = document.getElementById('formStatus');
+        
+        if (window.location.hash === '#rezervace' && document.referrer.includes(window.location.hostname)) {
+            formStatus.textContent = 'Děkujeme! Vaše rezervace byla úspěšně odeslána. Brzy vás budeme kontaktovat.';
+            formStatus.className = 'form-status success';
+            formStatus.style.display = 'block';
+            
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+                window.location.hash = '';
+            }, 5000);
+        }
+        
+        rezervaceForm.addEventListener('submit', function(e) {
+            const emailInput = document.getElementById('email');
+            const nameInput = document.getElementById('name');
+            
+            if (!emailInput.validity.valid) {
+                e.preventDefault();
+                formStatus.textContent = 'Prosím zadejte platnou e-mailovou adresu.';
+                formStatus.className = 'form-status error';
+                formStatus.style.display = 'block';
+                emailInput.focus();
+                return false;
+            }
+            
+            if (!nameInput.value.trim()) {
+                e.preventDefault();
+                formStatus.textContent = 'Prosím vyplňte své jméno.';
+                formStatus.className = 'form-status error';
+                formStatus.style.display = 'block';
+                nameInput.focus();
+                return false;
+            }
+        });
+        
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
