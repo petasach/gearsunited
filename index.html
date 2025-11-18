@@ -538,11 +538,11 @@
         
         @keyframes galleryScrollLeft {
             from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            to { transform: translateX(calc(-100% + 100vw)); }
         }
         
         @keyframes galleryScrollRight {
-            from { transform: translateX(-50%); }
+            from { transform: translateX(-100% + 100vw); }
             to { transform: translateX(0); }
         }
         
@@ -1588,6 +1588,7 @@
 </body>
 
 </html>
+
 
 
 
