@@ -511,66 +511,70 @@
             padding: 0;
             overflow: hidden;
         }
-        
+    
         .gallery .section-header {
             padding: 5rem 2rem 3rem;
             margin-bottom: 0;
         }
-        
+
         .gallery-carousel {
             position: relative;
             overflow: hidden;
             margin: 0;
         }
-        
+    
         .gallery-track {
             display: flex;
             gap: 0;
         }
-        
+    
+        /* LEFT ROW — moves left by exactly 300vw (3 images) */
         .gallery-track.left {
-            animation: galleryScrollLeft 5s linear infinite;
+            animation: galleryScrollLeft 12s linear infinite;
         }
-        
+    
+        /* RIGHT ROW — moves right by exactly 300vw (reverse animation) */
         .gallery-track.right {
-            animation: galleryScrollRight 5s linear infinite;
+            animation: galleryScrollRight 12s linear infinite;
         }
-        
+    
+        /* 6 items = 600vw total width, but we want to scroll only 3 items (300vw) */
         @keyframes galleryScrollLeft {
             from { transform: translateX(0); }
-            to { transform: translateX(200%)); }
+            to   { transform: translateX(-300vw); }
         }
-        
+    
         @keyframes galleryScrollRight {
-            from { transform: translateX(200%); }
-            to { transform: translateX(0); }
+            from { transform: translateX(-300vw); }
+            to   { transform: translateX(0); }
         }
-        
+    
         .gallery-item {
             flex-shrink: 0;
             position: relative;
-            width: 100vw;
+            width: 100vw;   /* full-screen image */
             height: 70vh;
             cursor: pointer;
             transition: var(--transition);
             background: linear-gradient(45deg, var(--gray-200), var(--gray-100));
         }
-        
+    
+        /* Pause animation on hover */
         .gallery-carousel:hover .gallery-track {
             animation-play-state: paused;
         }
-        
+    
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition-slow);
         }
-        
+    
         .gallery-item:hover img {
             transform: scale(1.05);
         }
-        
+    
         .gallery-overlay {
             position: absolute;
             inset: 0;
@@ -583,7 +587,7 @@
             opacity: 0;
             transition: var(--transition);
         }
-        
+    
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
         }
@@ -601,18 +605,19 @@
             transition: var(--transition);
             cursor: pointer;
         }
-        
+    
         .gallery-modal.active {
             opacity: 1;
             visibility: visible;
         }
-        
+    
         .gallery-modal img {
             max-width: 90vw;
             max-height: 90vh;
             object-fit: contain;
             border-radius: var(--border-radius);
         }
+
         
         .sponsors {
             background: var(--cream);
@@ -1588,6 +1593,7 @@
 </body>
 
 </html>
+
 
 
 
