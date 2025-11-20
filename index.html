@@ -1467,6 +1467,44 @@
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('galleryModal');
+            if (!modal.classList.contains('active')) return;
+        
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Touch swipe navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const modalEl = document.getElementById('galleryModal');
+        
+        modalEl.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        modalEl.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+        
+        function handleGesture() {
+            const swipeDistance = touchEndX - touchStartX;
+        
+            if (Math.abs(swipeDistance) < 50) return; // ignore tiny gestures
+        
+            if (swipeDistance < 0) {
+                nextImage(); // swipe left → next
+            } else {
+                prevImage(); // swipe right → prev
+            }
+        }
+
         
         document.querySelectorAll('.btn-ripple').forEach(button => {
             button.addEventListener('click', function(e) {
@@ -1560,6 +1598,7 @@
 </body>
 
 </html>
+
 
 
 
