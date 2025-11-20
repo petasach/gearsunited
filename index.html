@@ -955,6 +955,45 @@
                 opacity: 0;
             }
         }
+
+        .gallery-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+        }
+        
+        .gallery-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-prev,
+        .modal-next {
+            position: absolute;
+            top: 50%;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            padding: 0 15px;
+            user-select: none;
+            transform: translateY(-50%);
+        }
+        
+        .modal-prev { left: 20px; }
+        .modal-next { right: 20px; }
+        
+        .modal-prev:hover,
+        .modal-next:hover {
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 <body>
@@ -1286,9 +1325,12 @@
         </div>
     </footer>
 
-    <div class="gallery-modal" id="galleryModal" onclick="closeModal()">
+    <div class="gallery-modal" id="galleryModal">
+        <span class="modal-prev" onclick="event.stopPropagation(); prevImage();">&#10094;</span>
         <img id="modalImage" src="" alt="">
+        <span class="modal-next" onclick="event.stopPropagation(); nextImage();">&#10095;</span>
     </div>
+
 
     <script>
         const header = document.getElementById('header');
@@ -1385,18 +1427,39 @@
                 button.querySelector('i').style.transform = 'rotate(0deg)';
             }
         }
+
+        // Collect ALL gallery images (both rows)
+        const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'))
+                                   .map(img => img.src);
+
+        let currentIndex = 0;
+
         
         function openModal(item) {
             const modal = document.getElementById('galleryModal');
             const modalImg = document.getElementById('modalImage');
-            const img = item.querySelector('img');
-            
-            if (img) {
-                modalImg.src = img.src;
-                modalImg.alt = img.alt;
-            }
+            const clickedSrc = item.querySelector('img').src;
+        
+            currentIndex = galleryImages.indexOf(clickedSrc); // set starting index
+        
+            modalImg.src = clickedSrc;
             modal.classList.add('active');
+        
             document.body.style.overflow = 'hidden';
+        }
+
+        function showImage(index) {
+            const modalImg = document.getElementById('modalImage');
+            currentIndex = (index + galleryImages.length) % galleryImages.length;
+            modalImg.src = galleryImages[currentIndex];
+        }
+        
+        function nextImage() {
+            showImage(currentIndex + 1);
+        }
+        
+        function prevImage() {
+            showImage(currentIndex - 1);
         }
         
         function closeModal() {
@@ -1497,6 +1560,7 @@
 </body>
 
 </html>
+
 
 
 
