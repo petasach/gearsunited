@@ -1330,8 +1330,7 @@
         <img id="modalImage" src="" alt="">
         <span class="modal-next" onclick="event.stopPropagation(); nextImage();">&#10095;</span>
     </div>
-
-
+    
     <script>
         const header = document.getElementById('header');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1468,6 +1467,16 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Close modal when clicking outside the image & arrows
+        document.getElementById('galleryModal').addEventListener('click', (e) => {
+            const clickedElement = e.target;
+        
+            // If clicking directly the background → close
+            if (clickedElement.id === 'galleryModal') {
+                closeModal();
+            }
+        });
+        
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('galleryModal');
@@ -1598,6 +1607,7 @@
 </body>
 
 </html>
+
 
 
 
