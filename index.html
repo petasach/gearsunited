@@ -528,17 +528,14 @@
             gap: 0;
         }
     
-        /* LEFT ROW — moves left by exactly 300vw (3 images) */
         .gallery-track.left {
             animation: galleryScrollLeft 12s linear infinite;
         }
     
-        /* RIGHT ROW — moves right by exactly 300vw (reverse animation) */
         .gallery-track.right {
             animation: galleryScrollRight 12s linear infinite;
         }
     
-        /* 6 items = 600vw total width, but we want to scroll only 3 items (300vw) */
         @keyframes galleryScrollLeft {
             from { transform: translateX(0); }
             to   { transform: translateX(-300vw); }
@@ -559,10 +556,9 @@
             background: linear-gradient(45deg, var(--gray-200), var(--gray-100));
         }
     
-        /* Pause animation on hover */
-        .gallery-carousel:hover .gallery-track {
+        /*.gallery-carousel:hover .gallery-track {
             animation-play-state: paused;
-        }
+        }*/
     
         .gallery-item img {
             width: 100%;
@@ -1605,6 +1601,7 @@
 </body>
 
 </html>
+
 
 
 
