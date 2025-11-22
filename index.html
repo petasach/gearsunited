@@ -867,7 +867,7 @@
             .nav-left,
             .nav-right {
                 display: none;
-                position: static;
+                position: static !important;
                 top: 100%;
                 left: 0;
                 right: 0;
@@ -881,7 +881,7 @@
             
             .nav-left.active,
             .nav-right.active {
-                display: flex;
+                display: flex !important;
             }
 
             /*.nav-right.active {
@@ -904,19 +904,24 @@
             .logo {
                 position: relative;
                 z-index: 1001;
+                order: -1;
+                margin-bottom: 1rem;
             }
         
             /* Remove left/right absolute positions */
-            .nav-left {
+            /*.nav-left {
                 left: unset;
             }
             .nav-right {
                 right: unset;
-            }
+            }*/
         
             /* NAVIGATION becomes vertical */
             .nav {
                 position: relative;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0;
             }
             
             .hero-title {
@@ -1632,6 +1637,7 @@
 </body>
 
 </html>
+
 
 
 
