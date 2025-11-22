@@ -878,6 +878,27 @@
                 gap: 0;
                 box-shadow: var(--shadow-lg);
             }
+            
+            .nav-left.active,
+            .nav-right.active {
+                display: flex;
+            }
+
+            /*.nav-right.active {
+                margin-top: 0.5rem;
+            }*/
+            
+            .nav-link {
+                padding: 1rem 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(0, 47, 73, 0.1);
+            }
+            
+            .logo-image {
+                width: 100px;
+                height: 100px;
+            }
 
             /* Hide logo between menus on mobile */
             .logo {
@@ -896,27 +917,6 @@
             /* NAVIGATION becomes vertical */
             .nav {
                 position: relative;
-            }
-            
-            .nav-left.active,
-            .nav-right.active {
-                display: flex;
-            }
-
-            .nav-right.active {
-                margin-top: 0.5rem;
-            }
-            
-            .nav-link {
-                padding: 1rem 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid rgba(0, 47, 73, 0.1);
-            }
-            
-            .logo-image {
-                width: 100px;
-                height: 100px;
             }
             
             .hero-title {
@@ -1632,6 +1632,7 @@
 </body>
 
 </html>
+
 
 
 
