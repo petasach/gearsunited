@@ -435,9 +435,16 @@
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
-        
+
+        .event-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
         .event-btn {
-            display: inline-flex;
+           display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             background: transparent;
@@ -456,6 +463,36 @@
             color: var(--white);
             transform: translateY(-2px);
         }
+        
+        .sign-btn {
+           display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: 2px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .sign-btn:hover {
+            background: var(--primary-red);
+            color: var(--white);
+            transform: translateY(-2px);
+        } 
+
+        .event-actions button,
+        .event-actions a {
+            font-family: inherit;
+            font-size: 0.85rem;
+            line-height: 1;
+            font-weight: 600;
+        }
+
         
         .event-details {
             display: none;
@@ -1119,9 +1156,14 @@
                         <p class="event-description">
                             Technický okruh Wachauring je ideálním místem pro čistý drift bez kompromisů. Krátká, plynulá trať s technickými pasážemi prověří kontrolu nad autem, práci s plynem i přesnost nájezdů.
                         </p>
-                        <button class="event-btn" onclick="toggleDetails('event1')">
-                            <span>Zobrazit detaily</span>
-                        </button>
+                        <div class="event-actions">
+                            <button class="event-btn" onclick="toggleDetails('event1')">
+                                <span>Více informací</span>
+                            </button>
+                            <a href="#rezervaceForm" class="sign-btn">
+                                <span>Přihlásit se</span>
+                            </a>
+                        </div>
                         <div class="event-details" id="event1">
                             <p>
                                 Čeká tě otevřený driftovací trackday zaměřený na maximální seat-time, plynulý provoz na trati a přátelskou atmosféru. Ať už ladíš první úhly, nebo chceš pilovat konzistentní jízdu, Wachauring nabídne perfektní podmínky pro posun tvých dovedností.
@@ -1146,9 +1188,14 @@
                         <p class="event-description">
                             Technický okruh Wachauring je ideálním místem pro čistý drift bez kompromisů. Krátká, plynulá trať s technickými pasážemi prověří kontrolu nad autem, práci s plynem i přesnost nájezdů.
                         </p>
-                        <button class="event-btn" onclick="toggleDetails('event2')">
-                            <span>Zobrazit detaily</span>
-                        </button>
+                        <div class="event-actions">
+                            <button class="event-btn" onclick="toggleDetails('event2')">
+                                <span>Více informací</span>
+                            </button>
+                            <a href="#rezervaceForm" class="sign-btn">
+                                <span>Přihlásit se</span>
+                            </a>
+                        </div>
                         <div class="event-details" id="event2">
                             <p>
                                 Čeká tě otevřený driftovací trackday zaměřený na maximální seat-time, plynulý provoz na trati a přátelskou atmosféru. Ať už ladíš první úhly, nebo chceš pilovat konzistentní jízdu, Wachauring nabídne perfektní podmínky pro posun tvých dovedností.
